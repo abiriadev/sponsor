@@ -6,6 +6,8 @@ on:
     branches:
       - main
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   update-sponsors:
     runs-on: ubuntu-latest
