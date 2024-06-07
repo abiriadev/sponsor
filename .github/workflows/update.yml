@@ -1,0 +1,36 @@
+name: Update
+on:
+  schedule:
+    - cron: '0 * * * *'
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  update-sponsors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+      - name: Setup yarn
+        run: corepack enable
+      - name: Update sponsors
+        run: yarn build
+        env:
+          SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORKIT_GITHUB_TOKEN }}
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: update on ${{ steps.date.outputs.date }}
+          add: 'assets'
+          committer_name: GitHub Actions
+          committer_email: github-actions[bot]@users.noreply.github.com
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
