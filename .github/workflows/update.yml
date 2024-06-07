@@ -18,6 +18,8 @@ jobs:
           node-version-file: .node-version
       - name: Setup yarn
         run: corepack enable
+      - name: Install esbuild
+        run: yarn
       - name: Update sponsors
         run: yarn build
         env:
