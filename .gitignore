@@ -5,3 +5,4 @@
 !.yarn/sdks
 !.yarn/versions
 !.yarn/cache
+assets/.cache.json
