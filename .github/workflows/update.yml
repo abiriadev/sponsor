@@ -1,7 +1,7 @@
 name: Update
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 0 * * *'
   push:
     branches:
       - main
@@ -14,12 +14,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: .node-version
+          cache: yarn
       - name: Setup yarn
         run: corepack enable
       - name: Install esbuild
